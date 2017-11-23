@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="colorPrimary">#3F51B5</color>
+	<color name="colorPrimaryDark">#303F9F</color>
+	<color name="colorAccent">#FF4081</color>
+
+	<color name="samplePrimary">#1E88E5</color>
+	<color name="samplePrimaryDark">#1565C0</color>
+	<color name="sampleAccentColor">#FF5722</color>
+	<color name="sampleBackgroundColor">#E1F5FE</color>
+	<color name="sampleHighlightColor">#0277BD</color>
+	<color name="sampleImageTypeColor">#1E88E5</color>
+	<color name="sampleReadImageTypeColor">#FF7043</color>
+	<color name="sampleTitleColor">#9C27B0</color>
+	<color name="sampleReadTitleColor">#673AB7</color>
+	<color name="sampleDescriptionColor">#546E7A</color>
+	<color name="sampleReadDescriptionColor">#78909C</color>
+	<color name="sampleDateColor">#1E88E5</color>
+	<color name="sampleReadDateColor">#FF7043</color>
+	<color name="sampleDividerColor">#9FA8DA</color>
+</resources>

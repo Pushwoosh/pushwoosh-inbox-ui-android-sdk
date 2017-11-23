@@ -1,0 +1,54 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.pushwoosh.inboxsample"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [pw_appid   : "23F69-AC9A0",
+                                pw_senderId: "A595932297518"]
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+ext.support = "26.1.0"
+ext.playServices = "11.6.0"
+ext.pushwoosh = "5.5.0"
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    implementation "com.pushwoosh:pushwoosh-inbox:$pushwoosh"
+    implementation "com.pushwoosh:pushwoosh-inbox-ui:$pushwoosh"
+    implementation "com.pushwoosh:pushwoosh:$pushwoosh"
+
+    implementation "com.google.firebase:firebase-messaging:$playServices"
+
+    implementation "com.android.support:appcompat-v7:$support"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    //Add this dependencies to correct work of inboxUi
+    implementation "com.android.support:recyclerview-v7:$support"
+    implementation "com.android.support:design:$support"
+    implementation "com.github.bumptech.glide:glide:4.3.1"
+}
+
+
+apply plugin: 'com.google.gms.google-services'
