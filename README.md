@@ -1,6 +1,6 @@
 # Pushwoosh Inbox UI
-Enterprise-level feature. For more info, please contact [Pushwoosh support](https://www.pushwoosh.com/contact-us/)
-# Implementation
+
+## Installation
 To add Inbox UI to your Android project, you should add Kotlin support and Pushwoosh Inbox libraries. Add the following lines to your project's build.gradle:
 
 ```
@@ -41,6 +41,8 @@ dependencies {
     ...
 }
 ```
+
+## Implementation
 To show Inbox UI in your app you can:
 * Start an activity by using following line:
 ```
@@ -52,5 +54,5 @@ getSupportFragmentManager().beginTransaction()
                     .replace(R.id.inboxContainer, PushwooshInboxUi.INSTANCE.createInboxFragment())
                     .commitAllowingStateLoss()
 ```
-# Customization
+## Customization
 You can customize Inbox UI style. Check [attrs.xml](InboxUiLibrary/pushwoosh-inbox-ui/src/main/res/values/attrs.xml) for all attributes that you can change. Also you can change Inbox UI style from code. To do so, please see [PushwooshInboxStyle](InboxUiLibrary/pushwoosh-inbox-ui/src/main/java/com/pubshwoosh/inbox/ui/PushwooshInboxStyle.kt). For more details, take a look at [Inbox samples](InboxSample).
