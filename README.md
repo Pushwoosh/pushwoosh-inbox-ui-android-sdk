@@ -55,4 +55,4 @@ getSupportFragmentManager().beginTransaction()
                     .commitAllowingStateLoss()
 ```
 ## Customization
-You can customize Inbox UI style. Check [attrs.xml](InboxUiLibrary/pushwoosh-inbox-ui/src/main/res/values/attrs.xml) for all attributes that you can change. Also you can change Inbox UI style from code. To do so, please see [PushwooshInboxStyle](InboxUiLibrary/pushwoosh-inbox-ui/src/main/java/com/pubshwoosh/inbox/ui/PushwooshInboxStyle.kt). For more details, take a look at [Inbox samples](InboxSample).
+You can customize Inbox UI style. Check [attrs.xml](InboxUiLibrary/pushwoosh-inbox-ui/src/main/res/values/attrs.xml) for all attributes that you can change. Also you can change Inbox UI style from code. To do so, please see [PushwooshInboxStyle](InboxUiLibrary/pushwoosh-inbox-ui/src/main/java/com/pubshwoosh/inbox/ui/PushwooshInboxStyle.kt). For more details, take a look at [Inbox sample](InboxSample).
