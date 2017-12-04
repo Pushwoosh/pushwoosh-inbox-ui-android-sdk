@@ -29,4 +29,4 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:id="@+id/inboxContentContainer"
-             tools:context="com.pubshwoosh.inbox.ui.presentation.view.activity.InboxActivity"/>
+             tools:context="com.pushwoosh.inbox.ui.presentation.view.activity.InboxActivity"/>

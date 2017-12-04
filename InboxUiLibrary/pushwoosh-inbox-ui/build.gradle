@@ -24,7 +24,18 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+ext {
+    targetArtefactIdDev = "pushwoosh-inbox-ui-dev"
+    targetArtefactId = "pushwoosh-inbox-ui"
+    targetName = "Pushwoosh Inbox UI"
+    targetDescription = "Pushwoosh Inbox UI"
+}
+
+apply from: '../scripts/maven/maven.gradle'
+
 apply plugin: 'com.android.library'
+
+apply from: '../scripts/quality/quality.gradle'
 
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -62,9 +73,9 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$support"
     implementation "com.android.support:design:$support"
 
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation "com.github.bumptech.glide:glide:4.3.1"
+    implementation "com.android.support.constraint:constraint-layout:$constraint"
+    implementation "com.github.bumptech.glide:glide:$glide"
 
-    implementation "com.pushwoosh:pushwoosh:$pushwoosh"
-    implementation "com.pushwoosh:pushwoosh-inbox:$pushwoosh"
+	implementation "com.pushwoosh:pushwoosh:$pushwoosh"
+	implementation "com.pushwoosh:pushwoosh-inbox:$pushwoosh"
 }

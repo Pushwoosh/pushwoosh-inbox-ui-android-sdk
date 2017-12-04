@@ -25,11 +25,11 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.pubshwoosh.inbox.ui">
+	package="com.pushwoosh.inbox.ui">
 
 	<application>
 		<activity
-			android:name="com.pubshwoosh.inbox.ui.presentation.view.activity.InboxActivity"
+			android:name="com.pushwoosh.inbox.ui.presentation.view.activity.InboxActivity"
 			android:theme="@style/PwInboxTheme" />
 	</application>
 

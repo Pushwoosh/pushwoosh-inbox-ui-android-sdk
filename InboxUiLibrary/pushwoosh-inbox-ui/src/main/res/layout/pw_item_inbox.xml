@@ -82,7 +82,7 @@
         android:layout_marginTop="@dimen/pw_normal_margin"
         tools:text="23 nov" />
 
-    <com.pubshwoosh.inbox.ui.presentation.view.view.TintableImageView
+    <com.pushwoosh.inbox.ui.presentation.view.view.TintableImageView
         android:id="@+id/inboxStatusImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
