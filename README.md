@@ -23,7 +23,7 @@ apply plugin: 'kotlin-android-extensions'
 ....
 
 ext.googlePlayService = "11.+"
-ext.support = "26.+"
+ext.support = "27.+"
 ext.pushwoosh = "5.+"
 
 dependencies {
