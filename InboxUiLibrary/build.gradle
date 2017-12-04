@@ -27,13 +27,15 @@ task clean(type: Delete) {
 }
 
 subprojects {
-    ext.global_compileSdkVersion = 26
-    ext.global_buildToolsVersion = "26.0.2"
-    ext.global_targetVersion = 26
-    ext.global_versionName = "5.5-beta"
+    ext.global_compileSdkVersion = 27
+    ext.global_buildToolsVersion = "27.0.2"
+    ext.global_targetVersion = 27
+    ext.global_versionName = "5.5.1"
     ext.global_targetGroupId = "com.pushwoosh"
 
-    ext.googlePlayService = "11.4.0"
-    ext.support = "26.0.2"
+    ext.googlePlayService = "11.6.2"
+    ext.support = "27.0.1"
 	ext.pushwoosh = "5.5.1"
+    ext.constraint = "1.0.2"
+    ext.glide = "4.3.1"
 }

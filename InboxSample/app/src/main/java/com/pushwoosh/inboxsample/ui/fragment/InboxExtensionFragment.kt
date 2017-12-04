@@ -2,7 +2,7 @@ package com.pushwoosh.inboxsample.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import com.pubshwoosh.inbox.ui.presentation.view.fragment.InboxFragment
+import com.pushwoosh.inbox.ui.presentation.view.fragment.InboxFragment
 import com.pushwoosh.inbox.PushwooshInbox
 import com.pushwoosh.inbox.event.InboxMessagesUpdatedEvent
 import com.pushwoosh.internal.event.EventBus
@@ -14,7 +14,7 @@ class InboxExtensionFragment: InboxFragment(){
     private var unreadMessagesCount: Int = -1
     private var totalMessageCount: Int = -1
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscription = EventBus.subscribe(InboxMessagesUpdatedEvent::class.java, {
             PushwooshInbox.messagesWithNoActionPerformedCount {
@@ -36,7 +36,7 @@ class InboxExtensionFragment: InboxFragment(){
 
     private fun updateTitle() {
         if (unreadMessagesCount != -1 && totalMessageCount != -1) {
-            activity.title = "$unreadMessagesCount/$totalMessageCount"
+            activity?.title = "$unreadMessagesCount/$totalMessageCount"
         }
     }
 }

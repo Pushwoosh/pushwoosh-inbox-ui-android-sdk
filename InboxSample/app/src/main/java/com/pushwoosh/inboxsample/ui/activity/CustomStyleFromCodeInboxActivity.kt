@@ -2,8 +2,8 @@ package com.pushwoosh.inboxsample.ui.activity
 
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import com.pubshwoosh.inbox.ui.PushwooshInboxStyle
-import com.pubshwoosh.inbox.ui.presentation.view.activity.InboxActivity
+import com.pushwoosh.inbox.ui.PushwooshInboxStyle
+import com.pushwoosh.inbox.ui.presentation.view.activity.InboxActivity
 import com.pushwoosh.inboxsample.R
 
 class CustomStyleFromResourceInboxActivity : InboxActivity()

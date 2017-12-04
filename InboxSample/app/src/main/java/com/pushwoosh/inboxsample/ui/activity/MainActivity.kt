@@ -3,7 +3,7 @@ package com.pushwoosh.inboxsample.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.pubshwoosh.inbox.ui.presentation.view.activity.InboxActivity
+import com.pushwoosh.inbox.ui.presentation.view.activity.InboxActivity
 import com.pushwoosh.inboxsample.R
 import kotlinx.android.synthetic.main.activity_main.*
 
