@@ -38,8 +38,8 @@ import com.pushwoosh.inbox.ui.PushwooshInboxStyle
 import com.pushwoosh.inbox.ui.R
 
 class ContextColorSchemeProvider(private val context: Context) : ColorSchemeProvider {
-    private val _defaultIcon: Drawable
-    override val defaultIcon: Drawable
+    private val _defaultIcon: Drawable?
+    override val defaultIcon: Drawable?
         get() = _defaultIcon
 
     private val _cellBackground: Drawable
@@ -129,6 +129,7 @@ class ContextColorSchemeProvider(private val context: Context) : ColorSchemeProv
         val styleDefaultIcon = drawableResources[R.attr.inboxDefaultIcon]
         val loadIcon = context.applicationInfo.loadIcon(context.packageManager)
         _defaultIcon = when {
+            PushwooshInboxStyle.defaultImageIconDrawable != null -> PushwooshInboxStyle.defaultImageIconDrawable
             PushwooshInboxStyle.defaultImageIcon != -1 -> ContextCompat.getDrawable(context, PushwooshInboxStyle.defaultImageIcon) ?: loadIcon
             styleDefaultIcon != null -> styleDefaultIcon
             else -> loadIcon

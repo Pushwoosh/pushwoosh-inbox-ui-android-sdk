@@ -28,6 +28,7 @@ package com.pushwoosh.inbox.ui.presentation.view.adapter.inbox
 
 import android.content.Context
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.pushwoosh.inbox.ui.PushwooshInboxStyle
 import com.pushwoosh.inbox.ui.presentation.view.adapter.BaseRecyclerAdapter
@@ -67,11 +68,24 @@ class InboxAdapter(context: Context,
 
     override fun animateItem(holder: ViewHolder<InboxMessage>, position: Int) {
         super.animateItem(holder, position)
-        if (position > lastPosition && PushwooshInboxStyle.listAnimation != PushwooshInboxStyle.EMPTY_ANIMATION) {
-            val animation = AnimationUtils.loadAnimation(context, PushwooshInboxStyle.listAnimation)
-            holder.itemView.startAnimation(animation)
-            lastPosition = position
+        if (position > lastPosition) {
+            var animation: Animation? = null
+            if (PushwooshInboxStyle.listAnimation != null) {
+                animation = PushwooshInboxStyle.listAnimation
+                startAnimation(holder, animation, position)
+            } else {
+                if (PushwooshInboxStyle.listAnimationResource != PushwooshInboxStyle.EMPTY_ANIMATION) {
+                    animation = AnimationUtils.loadAnimation(context, PushwooshInboxStyle.listAnimationResource)
+                    startAnimation(holder, animation, position)
+                }
+            }
+
         }
+    }
+
+    private fun startAnimation(holder: ViewHolder<InboxMessage>, animation: Animation?, position: Int) {
+        holder.itemView.startAnimation(animation)
+        lastPosition = position
     }
 
     override fun onBindViewHolder(holder: ViewHolder<InboxMessage>, position: Int) {

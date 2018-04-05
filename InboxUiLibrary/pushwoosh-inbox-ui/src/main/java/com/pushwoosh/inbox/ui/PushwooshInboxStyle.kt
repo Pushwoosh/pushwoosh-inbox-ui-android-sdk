@@ -26,15 +26,18 @@
 
 package com.pushwoosh.inbox.ui
 
+import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
 import android.support.annotation.AnimRes
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
+import android.view.animation.Animation
 import com.pushwoosh.inbox.ui.model.customizing.formatter.DefaultDateFormatter
 import com.pushwoosh.inbox.ui.model.customizing.formatter.InboxDateFormatter
 
 object PushwooshInboxStyle {
     /**
-     * Use this property for clearing list animation {@link #listAnimation}
+     * Use this property for clearing list animation {@link #listAnimationResource}
      */
     const val EMPTY_ANIMATION = -1
 
@@ -48,18 +51,21 @@ object PushwooshInboxStyle {
      * Item appearing animation. Set {@link #EMPTY_ANIMATION} for clear animation
      */
     @AnimRes
-    var listAnimation: Int = android.R.anim.slide_in_left
+    var listAnimationResource: Int = android.R.anim.slide_in_left
+    var listAnimation: Animation? = null
 
     /**
      * The icon shown near the message if there's no icon in push payload. If not specified, the app icon is used
      */
     @DrawableRes
     var defaultImageIcon: Int = -1
+    var defaultImageIconDrawable: Drawable? = null
 
     /**
      * The image which is displayed if an error occurs and the list of inbox messages is empty
      */
-    var listErrorImage = R.drawable.inbox_ic_error
+    var listErrorImage : Int = R.drawable.inbox_ic_error
+    var listErrorImageDrawable : Drawable? = null
 
     /**
      * The error text which is displayed when an error occurs
@@ -69,8 +75,10 @@ object PushwooshInboxStyle {
     /**
      * The image which is displayed if the list of inbox messages is empty
      */
-    var listEmptyImage = R.drawable.inbox_ic_empty
+    var listEmptyImage : Int = R.drawable.inbox_ic_empty
 
+
+    var listEmptyImageDrawable : Drawable? = null
     /**
      * The text which is displayed if the list of inbox messages is empty
      */
@@ -79,67 +87,57 @@ object PushwooshInboxStyle {
     /**
      * Accent color of inbox cell. By default used AppCompat R.attr.colorAccent
      */
-    @ColorRes
     var accentColor: Int? = null
 
     /**
      * The color of cell background. By default used Android android.R.attr.windowBackground
      */
-    @ColorRes
     var backgroundColor: Int? = null
     /**
      * The color of cell highlight. By default used AppCompat R.attr.colorControlHighlight
      */
-    @ColorRes
     var highlightColor: Int? = null
 
     /**
      * The color of the unread message action icon (Deep Link, URL, etc.). By default used {@link #accentColor}
      */
-    @ColorRes
     var imageTypeColor: Int? = null
     /**
      * The color of the read message action icon. By default used {@link #readDateColor}
      */
-    @ColorRes
     var readImageTypeColor: Int? = null
 
     /**
      * The title color of unread messages. By default used Android android.R.attr.textColorPrimary
      */
-    @ColorRes
     var titleColor: Int? = null
     /**
      * The title color of read messages. By default used Android android.R.attr.textColorSecondary
      */
-    @ColorRes
     var readTitleColor: Int? = null
 
     /**
      * The text color of unread messages. By default used Android android.R.attr.textColorSecondary
      */
-    @ColorRes
     var descriptionColor: Int? = null
     /**
      * The text color of read messages. By default used Android android.R.attr.textColorSecondary
      */
-    @ColorRes
     var readDescriptionColor: Int? = null
 
     /**
      * The date color of unread messages. By default used Android android.R.attr.textColorSecondary
      */
-    @ColorRes
     var dateColor: Int? = null
+
     /**
      * The date color of read messages. By default used Android android.R.attr.textColorSecondary
      */
-    @ColorRes
     var readDateColor: Int? = null
+
     /**
      * The divider color. By default used Android android.R.attr.listDivider
      */
-    @ColorRes
     var dividerColor: Int? = null
 
     /**

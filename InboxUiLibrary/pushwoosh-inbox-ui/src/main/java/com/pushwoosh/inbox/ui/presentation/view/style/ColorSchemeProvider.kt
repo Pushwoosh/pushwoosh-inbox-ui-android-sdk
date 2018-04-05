@@ -30,12 +30,12 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 
 interface ColorSchemeProvider {
-    val cellBackground: Drawable
+    val cellBackground: Drawable?
     val titleColor: ColorStateList
     val descriptionColor: ColorStateList
     val dateColor: ColorStateList
     val divider: Drawable?
     val accentColor: Int
     val imageColor: ColorStateList
-    val defaultIcon: Drawable
+    val defaultIcon: Drawable?
 }

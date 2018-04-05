@@ -79,7 +79,7 @@ open class InboxFragment : BaseFragment(), InboxView {
         }
         inboxAdapter.onItemStartSwipe = { inboxSwipeRefreshLayout.isEnabled = false }
         inboxAdapter.onItemStopSwipe = { inboxSwipeRefreshLayout.isEnabled = true }
-        inboxAdapter.onItemClick = { inboxMessage -> if(inboxMessage!=null) inboxPresenter.onItemClick(inboxMessage) }
+        inboxAdapter.onItemClick = { inboxMessage -> if (inboxMessage != null) inboxPresenter.onItemClick(inboxMessage) }
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         inboxRecyclerView.layoutManager = layoutManager
@@ -101,8 +101,17 @@ open class InboxFragment : BaseFragment(), InboxView {
             callback?.setTouchable(false)
         }
 
-        inboxErrorImageView.setImageResource(PushwooshInboxStyle.listErrorImage)
-        inboxEmptyImageView.setImageResource(PushwooshInboxStyle.listEmptyImage)
+        if (PushwooshInboxStyle.listErrorImageDrawable == null) {
+            inboxErrorImageView.setImageResource(PushwooshInboxStyle.listErrorImage)
+        } else {
+            inboxErrorImageView.setImageDrawable(PushwooshInboxStyle.listErrorImageDrawable)
+        }
+
+        if (PushwooshInboxStyle.listErrorImageDrawable == null) {
+            inboxEmptyImageView.setImageResource(PushwooshInboxStyle.listEmptyImage)
+        }else{
+            inboxEmptyImageView.setImageDrawable(PushwooshInboxStyle.listEmptyImageDrawable)
+        }
     }
 
     override fun showSwipeRefreshProgress() {
