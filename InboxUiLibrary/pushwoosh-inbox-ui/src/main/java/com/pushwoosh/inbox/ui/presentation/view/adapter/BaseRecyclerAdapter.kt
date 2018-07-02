@@ -116,19 +116,19 @@ abstract class BaseRecyclerAdapter<VH : BaseRecyclerAdapter.ViewHolder<Model>, M
         notifyItemInserted(position)
     }
 
-    override fun onViewAttachedToWindow(holder: VH?) {
+    override fun onViewAttachedToWindow(holder: VH) {
         super.onViewAttachedToWindow(holder)
-        holder!!.onAttach()
+        holder.onAttach()
     }
 
-    override fun onViewDetachedFromWindow(holder: VH?) {
+    override fun onViewDetachedFromWindow(holder: VH) {
         super.onViewDetachedFromWindow(holder)
-        holder!!.onDetach()
+        holder.onDetach()
     }
 
-    override fun onViewRecycled(holder: VH?) {
+    override fun onViewRecycled(holder: VH) {
         super.onViewRecycled(holder)
-        holder!!.recycled()
+        holder.recycled()
     }
 
     abstract class ViewHolder<Model>(view: View, private var adapter: BaseRecyclerAdapter<*, *>) : RecyclerView.ViewHolder(view), View.OnClickListener {
