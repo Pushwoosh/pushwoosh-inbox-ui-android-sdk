@@ -141,6 +141,28 @@ object PushwooshInboxStyle {
     var dividerColor: Int? = null
 
     /**
+     * The bar color. By default used Android android.R.attr.textColorSecondary
+     */
+    var barBackgroundColor: Int? = null
+
+    /**
+     * The bar accent color. By default used Android android.R.attr.textColorSecondary
+     */
+    var barAccentColor: Int? = null
+
+    /**
+     * The bar text color. By default used Android android.R.attr.textColorPrimary
+     */
+    var barTextColor: Int? = null
+
+
+    /**
+     * The bar text title.
+     */
+    var barTitle : String? = null
+
+
+    /**
      * Clear all setting colors
      */
     fun clearColors() {

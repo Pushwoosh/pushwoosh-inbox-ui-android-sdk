@@ -26,11 +26,20 @@
 
 package com.pushwoosh.inbox.ui.presentation.view.activity
 
+import android.graphics.PorterDuff
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.pushwoosh.inbox.ui.R
 import com.pushwoosh.inbox.ui.presentation.view.fragment.InboxFragment
+import android.text.Spannable
+import android.text.style.ForegroundColorSpan
+import android.text.SpannableString
+import com.pushwoosh.inbox.ui.PushwooshInboxStyle
+import android.graphics.PorterDuffColorFilter
+
 
 open class InboxActivity : AppCompatActivity() {
 
@@ -43,7 +52,40 @@ open class InboxActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pw_activity_inbox)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        setColorActionBar()
+        setTitle()
+        setTextColorBar()
+        setColorHomeButton()
+
         attachInboxFragment()
+    }
+
+    private fun setColorHomeButton() {
+        val barAccentColor: Int = PushwooshInboxStyle.barAccentColor ?: return
+        val drawable = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material)
+        val porterDuffColorFilter = PorterDuffColorFilter(barAccentColor, PorterDuff.Mode.SRC_IN)
+        drawable?.colorFilter = porterDuffColorFilter
+        supportActionBar?.setHomeAsUpIndicator(drawable)
+    }
+
+    private fun setTitle() {
+        val title: String = PushwooshInboxStyle.barTitle ?: return
+        supportActionBar?.title = title
+    }
+
+    private fun setTextColorBar() {
+        val textColor: Int = PushwooshInboxStyle.barTextColor ?: return
+
+        val text = SpannableString(supportActionBar?.title)
+        text.setSpan(ForegroundColorSpan(textColor), 0, text.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+        supportActionBar?.title = text
+    }
+
+    private fun setColorActionBar() {
+        val barColor: Int = PushwooshInboxStyle.barBackgroundColor ?: return
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(barColor))
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -58,7 +100,8 @@ open class InboxActivity : AppCompatActivity() {
 
     protected open fun attachInboxFragment() {
         var needToAdd = true
-        val fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)?.also { needToAdd = false } ?: InboxFragment()
+        val fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)?.also { needToAdd = false }
+                ?: InboxFragment()
 
         val beginTransaction = supportFragmentManager.beginTransaction()
         if (needToAdd) {
