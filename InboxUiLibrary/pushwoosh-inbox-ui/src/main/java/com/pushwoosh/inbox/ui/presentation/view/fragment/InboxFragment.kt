@@ -85,6 +85,11 @@ open class InboxFragment : BaseFragment(), InboxView {
         inboxRecyclerView.layoutManager = layoutManager
         inboxRecyclerView.adapter = inboxAdapter
 
+        val backgroundColor = PushwooshInboxStyle.backgroundColor
+        if (backgroundColor != null) {
+            inboxRecyclerView.setBackgroundColor(backgroundColor)
+        }
+
         val divider = colorSchemeProvider.divider
         if (divider != null) {
             val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
@@ -109,7 +114,7 @@ open class InboxFragment : BaseFragment(), InboxView {
 
         if (PushwooshInboxStyle.listErrorImageDrawable == null) {
             inboxEmptyImageView.setImageResource(PushwooshInboxStyle.listEmptyImage)
-        }else{
+        } else {
             inboxEmptyImageView.setImageDrawable(PushwooshInboxStyle.listEmptyImageDrawable)
         }
     }
