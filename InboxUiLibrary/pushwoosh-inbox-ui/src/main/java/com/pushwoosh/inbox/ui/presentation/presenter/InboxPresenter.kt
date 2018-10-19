@@ -39,7 +39,7 @@ import com.pushwoosh.internal.event.Subscription
 import java.lang.ref.WeakReference
 import java.util.*
 
-class InboxPresenter(inboxView: InboxView) : BasePresenter() {
+class InboxPresenter(inboxView: InboxView,val inboxRepository : InboxRepository) : BasePresenter() {
 
     companion object {
         private const val KEY_SWIPE_REFRESH = "KEY_SWIPE_REFRESH"
@@ -62,11 +62,11 @@ class InboxPresenter(inboxView: InboxView) : BasePresenter() {
 
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
-        subscription = InboxRepository.subscribeToEvent()
+        subscription = inboxRepository.subscribeToEvent()
 
 
-        InboxRepository.addCallback(callback)
-        InboxRepository.loadInbox(forceRequest = !restore)
+        inboxRepository.addCallback(callback)
+        inboxRepository.loadInbox(forceRequest = !restore)
     }
 
     override fun restoreState(bundle: Bundle) {
@@ -140,19 +140,19 @@ class InboxPresenter(inboxView: InboxView) : BasePresenter() {
 
     override fun onDestroy(isFinished: Boolean) {
         subscription?.unsubscribe()
-        InboxRepository.removeCallback(callback)
+        inboxRepository.removeCallback(callback)
     }
 
     fun removeItem(inboxMessage: InboxMessage?) {
         if (inboxMessage != null) {
             messageList.remove(inboxMessage)
-            InboxRepository.removeItem(inboxMessage)
+            inboxRepository.removeItem(inboxMessage)
         }
     }
 
     fun refreshItems() {
         swipeToRefresh = true
-        InboxRepository.loadInbox(true)
+        inboxRepository.loadInbox(true)
     }
 
     fun onItemClick(inboxMessage: InboxMessage) {

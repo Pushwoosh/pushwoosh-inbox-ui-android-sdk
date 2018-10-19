@@ -47,6 +47,7 @@ import com.pushwoosh.inbox.ui.presentation.view.adapter.inbox.InboxAdapter
 import com.pushwoosh.inbox.ui.presentation.view.style.ColorSchemeProvider
 import com.pushwoosh.inbox.ui.presentation.view.style.ColorSchemeProviderFactory
 import com.pushwoosh.inbox.data.InboxMessage
+import com.pushwoosh.inbox.ui.model.repository.InboxRepositoryImpl
 import kotlinx.android.synthetic.main.pw_fragment_inbox.*
 
 
@@ -58,7 +59,8 @@ open class InboxFragment : BaseFragment(), InboxView {
     private lateinit var colorSchemeProvider: ColorSchemeProvider
 
     override fun onAttach(context: Context) {
-        inboxPresenter = InboxPresenter(this).apply { addLifecycleListener(this) }
+        val inboxRepository = InboxRepositoryImpl()
+        inboxPresenter = InboxPresenter(this, inboxRepository).apply { addLifecycleListener(this) }
         super.onAttach(context)
         colorSchemeProvider = ColorSchemeProviderFactory.generateColorScheme(context)
         inboxAdapter = InboxAdapter(context, colorSchemeProvider)
