@@ -31,9 +31,9 @@ ext {
     targetDescription = "Pushwoosh Inbox UI"
 }
 
-apply from: '../scripts/maven/maven.gradle'
 
 apply plugin: 'com.android.library'
+apply from: '../scripts/maven/maven.gradle'
 
 apply from: '../scripts/quality/quality.gradle'
 
