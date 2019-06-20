@@ -31,6 +31,7 @@ import com.pushwoosh.inbox.PushwooshInbox
 import com.pushwoosh.inbox.data.InboxMessage
 import com.pushwoosh.inbox.event.InboxMessagesUpdatedEvent
 import com.pushwoosh.inbox.ui.PushwooshInboxStyle
+import com.pushwoosh.inbox.ui.PushwooshInboxUi
 import com.pushwoosh.inbox.ui.model.repository.InboxEvent
 import com.pushwoosh.inbox.ui.model.repository.InboxRepository
 import com.pushwoosh.inbox.ui.presentation.data.UserError
@@ -43,7 +44,6 @@ class InboxPresenter(inboxView: InboxView) : BasePresenter() {
 
     companion object {
         private const val KEY_SWIPE_REFRESH = "KEY_SWIPE_REFRESH"
-        private const val KEY_COLLECTION = "KEY_COLLECTION"
     }
 
     private val inboxViewRef: WeakReference<InboxView> = WeakReference(inboxView)
@@ -64,16 +64,14 @@ class InboxPresenter(inboxView: InboxView) : BasePresenter() {
         super.onCreate(bundle)
         subscription = InboxRepository.subscribeToEvent()
 
-
         InboxRepository.addCallback(callback)
-        InboxRepository.loadInbox(forceRequest = !restore)
+        inboxEvent = InboxEvent.OnCreate()
     }
 
     override fun restoreState(bundle: Bundle) {
         swipeToRefresh = bundle.getBoolean(KEY_SWIPE_REFRESH, swipeToRefresh)
-        messageList.clear()
-        @Suppress("UNCHECKED_CAST")
-        messageList.addAll(bundle.getSerializable(KEY_COLLECTION) as ArrayList<out InboxMessage>)
+        inboxEvent = InboxEvent.RestoreState()
+        implementState()
     }
 
     override fun onViewCreated() {
@@ -91,11 +89,18 @@ class InboxPresenter(inboxView: InboxView) : BasePresenter() {
 
         val localInboxEvent = inboxEvent
         when (localInboxEvent) {
+            is InboxEvent.OnCreate -> loadInboxMessages()
             is InboxEvent.Loading -> if (!swipeToRefresh) inboxViewRef.get()?.showTotalProgress() else inboxViewRef.get()?.showSwipeRefreshProgress()
             is InboxEvent.FinishLoading -> inboxViewRef.get()?.hideProgress()
             is InboxEvent.FailedLoading -> {
                 inboxViewRef.get()?.failedLoadingInboxList(UserError(message = PushwooshInboxStyle.listErrorMessage))
                 swipeToRefresh = false
+            }
+            is InboxEvent.SuccessLoadingCache -> {
+                messageList.clear()
+                messageList.addAll(localInboxEvent.inboxMessages)
+                showList()
+                InboxRepository.loadInbox(forceRequest = !restore, inboxMessage = null, limit = -1)
             }
             is InboxEvent.SuccessLoading -> {
                 messageList.clear()
@@ -125,6 +130,17 @@ class InboxPresenter(inboxView: InboxView) : BasePresenter() {
         }
     }
 
+    private fun loadInboxMessages() {
+        messageList.clear()
+        var messages = InboxRepository.loadCachedInbox(null, 40)
+        if (messages.isNotEmpty()) {
+            messageList.addAll(messages)
+        }
+
+        showList()
+        InboxRepository.loadCachedInboxAsync(null, -1)
+    }
+
     private fun showList() {
         Collections.sort(messageList, { i1, i2 ->
             return@sort i2.compareTo(i1)
@@ -135,7 +151,6 @@ class InboxPresenter(inboxView: InboxView) : BasePresenter() {
 
     override fun onSaveInstanceState(out: Bundle) {
         out.putBoolean(KEY_SWIPE_REFRESH, swipeToRefresh)
-        out.putSerializable(KEY_COLLECTION, messageList)
     }
 
     override fun onDestroy(isFinished: Boolean) {
@@ -152,11 +167,12 @@ class InboxPresenter(inboxView: InboxView) : BasePresenter() {
 
     fun refreshItems() {
         swipeToRefresh = true
-        InboxRepository.loadInbox(true)
+        InboxRepository.loadInbox(forceRequest = true, inboxMessage = null, limit = -1)
     }
 
     fun onItemClick(inboxMessage: InboxMessage) {
         PushwooshInbox.performAction(inboxMessage.code)
+        PushwooshInboxUi.onMessageClickListener?.onInboxMessageClick(inboxMessage)
     }
 }
 

@@ -27,9 +27,12 @@
 package com.pushwoosh.inbox.ui
 
 import android.support.v4.app.Fragment
+import com.pushwoosh.inbox.data.InboxMessage
 import com.pushwoosh.inbox.ui.presentation.view.fragment.InboxFragment
 
 object PushwooshInboxUi{
+
+    var onMessageClickListener: (OnInboxMessageClickListener)? = null
 
     /**
      * @return the fragment corresponding for Inbox display

@@ -71,6 +71,10 @@ class ContextColorSchemeProvider(private val context: Context) : ColorSchemeProv
     override val imageColor: ColorStateList
         get() = _imageColor
 
+    private val _backgroundColor: Int
+    override val backgroundColor: Int
+        get() = _backgroundColor
+
     private val colorResources: Map<Int, Int>
     private val drawableResources: Map<Int, Drawable?>
 
@@ -125,6 +129,8 @@ class ContextColorSchemeProvider(private val context: Context) : ColorSchemeProv
         ))
 
         _cellBackground = provideCellBackground()
+
+        _backgroundColor = background
 
         val styleDefaultIcon = drawableResources[R.attr.inboxDefaultIcon]
         val loadIcon = context.applicationInfo.loadIcon(context.packageManager)

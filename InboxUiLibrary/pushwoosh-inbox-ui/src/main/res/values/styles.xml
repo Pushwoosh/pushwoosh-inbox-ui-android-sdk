@@ -53,6 +53,10 @@
 		
 		<item name="inboxDividerColor">?android:textColorPrimary</item>
 	</style>
+
+	<style name="PwInboxAttachment"
+		parent="Theme.AppCompat.Light.NoActionBar">
+	</style>
 	
 	<style name="TextAppearance.Inbox.InboxTitle"
 	       parent="TextAppearance.AppCompat.Subhead">
@@ -61,9 +65,11 @@
 	<style name="TextAppearance.Inbox.InboxDescription"
 	       parent="TextAppearance.AppCompat.Body1">
 	</style>
-	
+
 	<style name="TextAppearance.Inbox.InboxDate"
-	       parent="TextAppearance.AppCompat.Caption">
+		parent="TextAppearance.AppCompat.Caption"/>
+
+	<style name="PwAttachmentView">
 	</style>
 
 </resources>

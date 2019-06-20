@@ -26,9 +26,12 @@
 
 package com.pushwoosh.inbox.ui.presentation.view.fragment
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -37,16 +40,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.pushwoosh.inbox.data.InboxMessage
 import com.pushwoosh.inbox.ui.PushwooshInboxStyle
 import com.pushwoosh.inbox.ui.R
 import com.pushwoosh.inbox.ui.presentation.data.UserError
 import com.pushwoosh.inbox.ui.presentation.presenter.InboxPresenter
 import com.pushwoosh.inbox.ui.presentation.presenter.InboxView
+import com.pushwoosh.inbox.ui.presentation.view.activity.AttachmentActivity
 import com.pushwoosh.inbox.ui.presentation.view.adapter.SimpleItemTouchHelperCallback
 import com.pushwoosh.inbox.ui.presentation.view.adapter.inbox.InboxAdapter
 import com.pushwoosh.inbox.ui.presentation.view.style.ColorSchemeProvider
 import com.pushwoosh.inbox.ui.presentation.view.style.ColorSchemeProviderFactory
-import com.pushwoosh.inbox.data.InboxMessage
 import kotlinx.android.synthetic.main.pw_fragment_inbox.*
 
 
@@ -56,12 +60,13 @@ open class InboxFragment : BaseFragment(), InboxView {
     private lateinit var inboxPresenter: InboxPresenter
     private var callback: SimpleItemTouchHelperCallback? = null
     private lateinit var colorSchemeProvider: ColorSchemeProvider
+    private var attachmentClickListener: ((String, View) -> Unit) = {url : String, view : View -> onAttachmentClicked(url, view)}
 
     override fun onAttach(context: Context) {
         inboxPresenter = InboxPresenter(this).apply { addLifecycleListener(this) }
         super.onAttach(context)
         colorSchemeProvider = ColorSchemeProviderFactory.generateColorScheme(context)
-        inboxAdapter = InboxAdapter(context, colorSchemeProvider)
+        inboxAdapter = InboxAdapter(context, colorSchemeProvider, attachmentClickListener)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = LayoutInflater.from(context).inflate(R.layout.pw_fragment_inbox, container, false)
@@ -189,6 +194,19 @@ open class InboxFragment : BaseFragment(), InboxView {
         } else {
             messageTextView.visibility = View.VISIBLE
             messageTextView.text = message
+        }
+    }
+
+    private fun onAttachmentClicked(url: String, view : View) {
+        var intent = Intent(activity, AttachmentActivity::class.java)
+        intent.putExtra(AttachmentActivity.attachmentUrlExtra, url)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
+            var options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(activity as Activity, view, getString(R.string.pw_attachment_transition_id))
+            startActivity(intent, options.toBundle())
+        } else {
+            activity?.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            startActivity(intent)
         }
     }
 }

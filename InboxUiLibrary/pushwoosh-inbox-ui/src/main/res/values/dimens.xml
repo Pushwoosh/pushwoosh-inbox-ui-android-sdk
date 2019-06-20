@@ -29,6 +29,7 @@
 	
 	<dimen name="pw_empty_image">120dp</dimen>
 	<dimen name="pw_error_image">120dp</dimen>
+	<dimen name="pw_attachment_preview">40dp</dimen>
 	
 	<dimen name="pw_image_icon">56dp</dimen>
 	
@@ -37,4 +38,6 @@
 	<dimen name="pw_minor_margin">8dp</dimen>
 	<dimen name="pw_normal_margin">16dp</dimen>
 	<dimen name="pw_large_margin">54dp</dimen>
+	<dimen name="pw_date_text_size">12sp</dimen>
+	<dimen name="pw_title_text_size">16sp</dimen>
 </resources>

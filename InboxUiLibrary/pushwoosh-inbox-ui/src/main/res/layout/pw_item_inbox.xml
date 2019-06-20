@@ -23,10 +23,10 @@
   ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
   ~ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="@dimen/pw_min_cell_height">
@@ -40,26 +40,26 @@
         app:srcCompat="@mipmap/ic_launcher_round" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:clipChildren="false"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_weight="1"
         android:layout_marginBottom="@dimen/pw_normal_margin"
         android:layout_marginEnd="@dimen/pw_minor_margin"
         android:layout_marginRight="@dimen/pw_minor_margin"
         android:layout_marginTop="@dimen/pw_normal_margin"
-        android:layout_toEndOf="@+id/inboxImageView"
-        android:layout_toLeftOf="@+id/inboxDateTextView"
-        android:layout_toRightOf="@+id/inboxImageView"
-        android:layout_toStartOf="@+id/inboxDateTextView"
         android:gravity="center"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/inboxLabelTextView"
-            style="@style/TextAppearance.Inbox.InboxTitle"
-            android:layout_width="match_parent"
+            tools:style="@style/TextAppearance.Inbox.InboxTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Label" />
+            android:layout_marginRight="@dimen/pw_normal_margin"
+            android:layout_marginEnd="@dimen/pw_normal_margin"
+            android:layout_gravity="start"
+            tools:text="Title" />
 
         <TextView
             android:id="@+id/inboxDescriptionTextView"
@@ -69,29 +69,39 @@
             android:layout_marginTop="@dimen/pw_minor_margin"
             tools:text="Avatar with text and icon" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/inboxDateTextView"
-        style="@style/TextAppearance.Inbox.InboxDate"
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="@dimen/pw_normal_margin"
-        android:layout_marginRight="@dimen/pw_normal_margin"
-        android:layout_marginTop="@dimen/pw_normal_margin"
-        tools:text="23 nov" />
+        android:layout_height="wrap_content">
 
-    <com.pushwoosh.inbox.ui.presentation.view.view.TintableImageView
-        android:id="@+id/inboxStatusImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/inboxDateTextView"
-        android:layout_marginEnd="@dimen/pw_normal_margin"
-        android:layout_marginRight="@dimen/pw_normal_margin"
-        android:layout_marginTop="@dimen/pw_minor_margin"
-        android:contentDescription="@null"
-        android:src="@drawable/inbox_ic_rich_media" />
-</RelativeLayout>
+        <com.pushwoosh.inbox.ui.presentation.view.view.TintableImageView
+            android:id="@+id/inboxStatusImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/pw_normal_margin"
+            android:layout_marginRight="@dimen/pw_normal_margin"
+            android:layout_marginStart="@dimen/pw_normal_margin"
+            android:layout_marginLeft="@dimen/pw_normal_margin"
+            android:layout_marginTop="@dimen/pw_normal_margin"
+            android:contentDescription="@null"
+            android:src="@drawable/inbox_ic_rich_media" />
+        <ImageView
+            android:id="@+id/inboxBannerImage"
+            style="@style/PwAttachmentView"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/pw_minor_margin"
+            android:layout_marginBottom="@dimen/pw_minor_margin"
+            android:layout_marginStart="@dimen/pw_normal_margin"
+            android:layout_marginLeft="@dimen/pw_normal_margin"
+            android:layout_marginEnd="@dimen/pw_normal_margin"
+            android:layout_marginRight="@dimen/pw_normal_margin"
+            android:layout_width="@dimen/pw_attachment_preview"
+            android:layout_height="@dimen/pw_attachment_preview"
+            android:contentDescription="@null"
+            tools:src="@drawable/ic_launcher_foreground" />
+    </LinearLayout>
+
+</LinearLayout>

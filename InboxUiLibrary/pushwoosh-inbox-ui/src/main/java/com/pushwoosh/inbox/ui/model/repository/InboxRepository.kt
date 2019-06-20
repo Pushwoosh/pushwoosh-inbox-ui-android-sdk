@@ -26,9 +26,11 @@
 
 package com.pushwoosh.inbox.ui.model.repository
 
+import com.pushwoosh.function.Callback
 import com.pushwoosh.inbox.PushwooshInbox
 import com.pushwoosh.inbox.data.InboxMessage
 import com.pushwoosh.inbox.event.InboxMessagesUpdatedEvent
+import com.pushwoosh.inbox.exception.InboxMessagesException
 import com.pushwoosh.internal.event.EventBus
 import com.pushwoosh.internal.event.Subscription
 import com.pushwoosh.internal.utils.PWLog
@@ -77,9 +79,21 @@ object InboxRepository {
             })
 
     @Suppress("UNUSED_PARAMETER")
-    fun loadInbox(forceRequest: Boolean) {
+    fun loadInbox(forceRequest: Boolean, inboxMessage: InboxMessage?, limit:Int) {
         updateEvent(InboxEvent.Loading())
-        PushwooshInbox.loadMessages({ result ->
+        PushwooshInbox.loadMessages(getLoadMessagesCallback(isLoadingCachedMessages = false), inboxMessage, limit)
+    }
+
+    fun loadCachedInbox(inboxMessage: InboxMessage?, limit:Int) : Collection<InboxMessage> {
+        return PushwooshInbox.loadCachedMessages(inboxMessage, limit)
+    }
+
+    fun loadCachedInboxAsync(inboxMessage: InboxMessage?, limit:Int) {
+        PushwooshInbox.loadCachedMessages(getLoadMessagesCallback(isLoadingCachedMessages = true), inboxMessage, limit)
+    }
+
+    private fun getLoadMessagesCallback(isLoadingCachedMessages : Boolean) : Callback<Collection<InboxMessage>, InboxMessagesException> {
+        return Callback{ result ->
             PWLog.noise("loadInbox", "result isSuccess: " + result.isSuccess)
             updateEvent(InboxEvent.FinishLoading())
             val data = result.data
@@ -88,7 +102,11 @@ object InboxRepository {
             currentInboxMessages.addAll(ArrayList(data))
 
             if (data != null && data.isNotEmpty()) {
-                updateEvent(InboxEvent.SuccessLoading(currentInboxMessages))
+                if (isLoadingCachedMessages) {
+                    updateEvent(InboxEvent.SuccessLoadingCache(currentInboxMessages))
+                } else {
+                    updateEvent(InboxEvent.SuccessLoading(currentInboxMessages))
+                }
             }
             val error = result.exception
 
@@ -99,7 +117,7 @@ object InboxRepository {
             if (error == null && (data == null || data.isEmpty())) {
                 updateEvent(InboxEvent.InboxEmpty())
             }
-        })
+        }
     }
 
     private fun updateEvent(inboxEvent: InboxEvent) {
@@ -114,14 +132,17 @@ object InboxRepository {
 }
 
 sealed class InboxEvent {
+    class OnCreate : InboxEvent()
     class Loading : InboxEvent()
     class FinishLoading : InboxEvent()
     class FailedLoading(val error: Throwable) : InboxEvent()
+    class SuccessLoadingCache(val inboxMessages: Collection<InboxMessage>) : InboxEvent()
     class SuccessLoading(val inboxMessages: Collection<InboxMessage>) : InboxEvent()
     class InboxEmpty : InboxEvent()
     class InboxMessagesUpdated(val addedInboxMessages: Collection<InboxMessage>,
                                val updatedInboxMessages: Collection<InboxMessage>,
                                val deleted: Collection<InboxMessage>) : InboxEvent()
+    class RestoreState: InboxEvent()
 }
 
 fun <T> MutableCollection<T>.remove(filter: (T) -> Boolean): Collection<T> {

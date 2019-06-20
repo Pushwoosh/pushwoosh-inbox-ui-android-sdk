@@ -26,4 +26,5 @@
 
 <resources>
 	<string name="app_name">InBox-Ui</string>
+	<string name="pw_attachment_transition_id" translatable="false">attachment</string>
 </resources>

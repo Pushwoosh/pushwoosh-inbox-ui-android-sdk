@@ -27,19 +27,18 @@
 package com.pushwoosh.inbox.ui.presentation.view.adapter.inbox
 
 import android.content.Context
+import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import com.pushwoosh.inbox.ui.PushwooshInboxStyle
+import com.pushwoosh.inbox.data.InboxMessage
+import com.pushwoosh.inbox.data.InboxMessageType
 import com.pushwoosh.inbox.ui.presentation.view.adapter.BaseRecyclerAdapter
 import com.pushwoosh.inbox.ui.presentation.view.adapter.ItemTouchHelperAdapter
 import com.pushwoosh.inbox.ui.presentation.view.style.ColorSchemeProvider
-import com.pushwoosh.inbox.data.InboxMessage
-import com.pushwoosh.inbox.data.InboxMessageType
 
 
 class InboxAdapter(context: Context,
-                   private val colorSchemeProvider: ColorSchemeProvider) : BaseRecyclerAdapter<BaseRecyclerAdapter.ViewHolder<InboxMessage>, InboxMessage>(context), ItemTouchHelperAdapter {
+                   private val colorSchemeProvider: ColorSchemeProvider,
+                   attachmentClickListener: ((String, View) -> Unit)) : BaseRecyclerAdapter<BaseRecyclerAdapter.ViewHolder<InboxMessage>, InboxMessage>(context), ItemTouchHelperAdapter {
 
     companion object {
         const val TEXT_VIEW_TYPE = 0
@@ -49,6 +48,7 @@ class InboxAdapter(context: Context,
     var onItemStartSwipe: (() -> Unit)? = null
     var onItemStopSwipe: (() -> Unit)? = null
     var onItemClick: ((InboxMessage?) -> Unit)? = null
+    var attachmentClickListener = attachmentClickListener
     private var lastPosition = -1
 
     override fun startSwipe() {
@@ -66,28 +66,6 @@ class InboxAdapter(context: Context,
         notifyItemRemoved(position)
     }
 
-    override fun animateItem(holder: ViewHolder<InboxMessage>, position: Int) {
-        super.animateItem(holder, position)
-        if (position > lastPosition) {
-            var animation: Animation? = null
-            if (PushwooshInboxStyle.listAnimation != null) {
-                animation = PushwooshInboxStyle.listAnimation
-                startAnimation(holder, animation, position)
-            } else {
-                if (PushwooshInboxStyle.listAnimationResource != PushwooshInboxStyle.EMPTY_ANIMATION) {
-                    animation = AnimationUtils.loadAnimation(context, PushwooshInboxStyle.listAnimationResource)
-                    startAnimation(holder, animation, position)
-                }
-            }
-
-        }
-    }
-
-    private fun startAnimation(holder: ViewHolder<InboxMessage>, animation: Animation?, position: Int) {
-        holder.itemView.startAnimation(animation)
-        lastPosition = position
-    }
-
     override fun onBindViewHolder(holder: ViewHolder<InboxMessage>, position: Int) {
         super.onBindViewHolder(holder, position)
         holder.itemView.setOnClickListener {
@@ -97,7 +75,7 @@ class InboxAdapter(context: Context,
     }
 
     override fun createViewHolderInstance(parent: ViewGroup, viewType: Int): ViewHolder<InboxMessage> = when (viewType) {
-        TEXT_VIEW_TYPE -> InboxViewHolder(viewGroup = parent, adapter = this, colorSchemeProvider = colorSchemeProvider)
+        TEXT_VIEW_TYPE -> InboxViewHolder(viewGroup = parent, adapter = this, colorSchemeProvider = colorSchemeProvider, attachmentClickListener = attachmentClickListener)
         else -> throw IllegalArgumentException("Unknown type: $viewType")
     }
 

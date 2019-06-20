@@ -26,8 +26,15 @@
 
 package com.pushwoosh.inbox.ui.presentation.view.adapter.inbox
 
+import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.TextUtils
+import android.text.style.TextAppearanceSpan
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
@@ -36,17 +43,20 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import com.pushwoosh.inbox.data.InboxMessage
+import com.pushwoosh.inbox.data.InboxMessageType
+import com.pushwoosh.inbox.internal.data.InboxMessageImpl
 import com.pushwoosh.inbox.ui.R
 import com.pushwoosh.inbox.ui.presentation.view.adapter.BaseRecyclerAdapter
 import com.pushwoosh.inbox.ui.presentation.view.style.ColorSchemeProvider
 import com.pushwoosh.inbox.ui.utils.parseToString
-import com.pushwoosh.inbox.data.InboxMessage
-import com.pushwoosh.inbox.data.InboxMessageType
 import kotlinx.android.synthetic.main.pw_item_inbox.view.*
 
 class InboxViewHolder(viewGroup: ViewGroup,
                       adapter: InboxAdapter,
-                      private val colorSchemeProvider: ColorSchemeProvider) : BaseRecyclerAdapter.ViewHolder<InboxMessage>(R.layout.pw_item_inbox, viewGroup, adapter) {
+                      private val colorSchemeProvider: ColorSchemeProvider,
+                      attachmentClickListener: ((String, View) -> Unit)) : BaseRecyclerAdapter.ViewHolder<InboxMessage>(R.layout.pw_item_inbox, viewGroup, adapter) {
+    var attachmentClickListener : (String, View) -> Unit = attachmentClickListener
 
     override fun fillView(model: InboxMessage?, position: Int) {
         if (model == null) {
@@ -54,20 +64,18 @@ class InboxViewHolder(viewGroup: ViewGroup,
         }
 
         itemView.background = colorSchemeProvider.cellBackground
-        itemView.inboxLabelTextView.setTextColor(colorSchemeProvider.titleColor)
+        itemView.inboxLabelTextView.text = getInboxLabelText(model.title,
+                colorSchemeProvider.titleColor,
+                model.sendDate.parseToString(),
+                colorSchemeProvider.dateColor)
         itemView.inboxDescriptionTextView.setTextColor(colorSchemeProvider.descriptionColor)
-        itemView.inboxDateTextView.setTextColor(colorSchemeProvider.dateColor)
         itemView.inboxStatusImageView.setColorFilter(colorSchemeProvider.imageColor)
 
-        itemView.inboxLabelTextView.visibility = if (TextUtils.isEmpty(model.title)) View.GONE else View.VISIBLE
-        itemView.inboxLabelTextView.text = model.title
         itemView.inboxDescriptionTextView.text = model.message
-        itemView.inboxDateTextView.text = model.sendDate.parseToString()
         itemView.inboxStatusImageView.setImageResource(model.type.getResource())
 
         itemView.inboxLabelTextView.isSelected = !model.isActionPerformed
         itemView.inboxStatusImageView.isSelected = itemView.inboxLabelTextView.isSelected
-        itemView.inboxDateTextView.isSelected = itemView.inboxLabelTextView.isSelected
         itemView.inboxDescriptionTextView.isSelected = itemView.inboxLabelTextView.isSelected
 
         Glide.with(itemView)
@@ -93,6 +101,49 @@ class InboxViewHolder(viewGroup: ViewGroup,
 
         }.apply(RequestOptions.circleCropTransform())
                 .into(itemView.inboxImageView)
+
+        val bannerUrl = model.bannerUrl
+        if (bannerUrl != null && !TextUtils.isEmpty(bannerUrl)) {
+            itemView.inboxBannerImage.setOnClickListener{ attachmentClickListener.invoke(bannerUrl, itemView.inboxBannerImage) }
+            itemView.inboxBannerImage.visibility = View.VISIBLE
+            Glide.with(itemView.context)
+                    .load(bannerUrl)
+                    .into(itemView.inboxBannerImage)
+        } else {
+            itemView.inboxBannerImage.visibility = View.GONE
+        }
+    }
+
+    private fun getInboxLabelText(title: String?, titleColor: ColorStateList, date: String?, dateColor: ColorStateList) : CharSequence {
+        val ssb = SpannableStringBuilder()
+        if (title != null && !TextUtils.isEmpty(title)) {
+            val titleSpannable = SpannableString(title)
+            val titleAppearanceSpan = getTextAppearanceSpan(context,
+                    R.style.TextAppearance_Inbox_InboxTitle,
+                    titleColor)
+            titleSpannable.setSpan(titleAppearanceSpan, 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            ssb.append(titleSpannable)
+            ssb.append("  ")
+        }
+        if (date != null && !TextUtils.isEmpty(date)) {
+            val dateSpannable = SpannableString(date)
+            val dateAppearanceSpan = getTextAppearanceSpan(context,
+                    R.style.TextAppearance_Inbox_InboxDate,
+                    dateColor)
+            dateSpannable.setSpan(dateAppearanceSpan, 0, date.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            ssb.append(dateSpannable)
+            ssb.append(" ")
+        }
+        return ssb
+    }
+
+    private fun getTextAppearanceSpan(context: Context, appearance : Int, colorStateList: ColorStateList) : TextAppearanceSpan {
+        val tempSpan = TextAppearanceSpan(context, appearance)
+        return TextAppearanceSpan(tempSpan.family,
+                tempSpan.textStyle,
+                tempSpan.textSize,
+                colorStateList,
+                colorStateList)
     }
 }
 

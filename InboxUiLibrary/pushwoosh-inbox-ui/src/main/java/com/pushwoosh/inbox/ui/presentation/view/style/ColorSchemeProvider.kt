@@ -38,4 +38,5 @@ interface ColorSchemeProvider {
     val accentColor: Int
     val imageColor: ColorStateList
     val defaultIcon: Drawable?
+    val backgroundColor: Int
 }
