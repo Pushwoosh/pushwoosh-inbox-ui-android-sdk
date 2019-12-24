@@ -35,6 +35,7 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.text.style.TextAppearanceSpan
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
@@ -46,6 +47,7 @@ import com.bumptech.glide.request.target.Target
 import com.pushwoosh.inbox.data.InboxMessage
 import com.pushwoosh.inbox.data.InboxMessageType
 import com.pushwoosh.inbox.internal.data.InboxMessageImpl
+import com.pushwoosh.inbox.ui.PushwooshInboxStyle
 import com.pushwoosh.inbox.ui.R
 import com.pushwoosh.inbox.ui.presentation.view.adapter.BaseRecyclerAdapter
 import com.pushwoosh.inbox.ui.presentation.view.style.ColorSchemeProvider
@@ -68,6 +70,9 @@ class InboxViewHolder(viewGroup: ViewGroup,
                 colorSchemeProvider.titleColor,
                 model.sendDate.parseToString(),
                 colorSchemeProvider.dateColor)
+        if (PushwooshInboxStyle.descriptionTextSize != null)
+            itemView.inboxDescriptionTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, PushwooshInboxStyle.descriptionTextSize!!)
+
         itemView.inboxDescriptionTextView.setTextColor(colorSchemeProvider.descriptionColor)
         itemView.inboxStatusImageView.setColorFilter(colorSchemeProvider.imageColor)
 
@@ -120,6 +125,7 @@ class InboxViewHolder(viewGroup: ViewGroup,
             val titleSpannable = SpannableString(title)
             val titleAppearanceSpan = getTextAppearanceSpan(context,
                     R.style.TextAppearance_Inbox_InboxTitle,
+                    PushwooshInboxStyle.titleTextSize,
                     titleColor)
             titleSpannable.setSpan(titleAppearanceSpan, 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             ssb.append(titleSpannable)
@@ -129,6 +135,7 @@ class InboxViewHolder(viewGroup: ViewGroup,
             val dateSpannable = SpannableString(date)
             val dateAppearanceSpan = getTextAppearanceSpan(context,
                     R.style.TextAppearance_Inbox_InboxDate,
+                    PushwooshInboxStyle.dateTextSize,
                     dateColor)
             dateSpannable.setSpan(dateAppearanceSpan, 0, date.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             ssb.append(dateSpannable)
@@ -137,13 +144,18 @@ class InboxViewHolder(viewGroup: ViewGroup,
         return ssb
     }
 
-    private fun getTextAppearanceSpan(context: Context, appearance : Int, colorStateList: ColorStateList) : TextAppearanceSpan {
+    private fun getTextAppearanceSpan(context: Context, appearance : Int, textSizeSp: Float?, colorStateList: ColorStateList) : TextAppearanceSpan {
         val tempSpan = TextAppearanceSpan(context, appearance)
+        val textSize = if (textSizeSp != null) spToPx(textSizeSp) else tempSpan.textSize
         return TextAppearanceSpan(tempSpan.family,
                 tempSpan.textStyle,
-                tempSpan.textSize,
+                textSize,
                 colorStateList,
                 colorStateList)
+    }
+
+    private fun spToPx(sp: Float) : Int {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.resources.displayMetrics).toInt()
     }
 }
 

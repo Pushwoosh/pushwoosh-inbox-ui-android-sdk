@@ -161,6 +161,20 @@ object PushwooshInboxStyle {
      */
     var barTitle : String? = null
 
+    /**
+     * The title text size.
+     */
+    var titleTextSize : Float? = null
+
+    /**
+     * The description text size.
+     */
+    var descriptionTextSize : Float? = null
+
+    /**
+     * The date text size.
+     */
+    var dateTextSize : Float? = null
 
     /**
      * Clear all setting colors
