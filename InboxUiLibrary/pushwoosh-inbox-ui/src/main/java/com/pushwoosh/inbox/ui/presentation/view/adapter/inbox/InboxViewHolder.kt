@@ -28,7 +28,6 @@ package com.pushwoosh.inbox.ui.presentation.view.adapter.inbox
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.text.Spannable
 import android.text.SpannableString
@@ -42,15 +41,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.pushwoosh.inbox.data.InboxMessage
 import com.pushwoosh.inbox.data.InboxMessageType
-import com.pushwoosh.inbox.internal.data.InboxMessageImpl
 import com.pushwoosh.inbox.ui.PushwooshInboxStyle
 import com.pushwoosh.inbox.ui.R
 import com.pushwoosh.inbox.ui.presentation.view.adapter.BaseRecyclerAdapter
 import com.pushwoosh.inbox.ui.presentation.view.style.ColorSchemeProvider
+import com.pushwoosh.inbox.ui.utils.GlideUtils
 import com.pushwoosh.inbox.ui.utils.parseToString
 import kotlinx.android.synthetic.main.pw_item_inbox.view.*
 
@@ -86,6 +84,7 @@ class InboxViewHolder(viewGroup: ViewGroup,
         Glide.with(itemView)
                 .clear(itemView)
 
+        val requestBuilder =
         if (TextUtils.isEmpty(model.imageUrl)) {
             Glide.with(itemView.context)
                     .load(colorSchemeProvider.defaultIcon)
@@ -103,9 +102,10 @@ class InboxViewHolder(viewGroup: ViewGroup,
         } else {
             Glide.with(itemView)
                     .load(model.imageUrl)
+        }
 
-        }.apply(RequestOptions.circleCropTransform())
-                .into(itemView.inboxImageView)
+        GlideUtils.applyInto(requestBuilder, itemView.inboxImageView)
+
 
         val bannerUrl = model.bannerUrl
         if (bannerUrl != null && !TextUtils.isEmpty(bannerUrl)) {
