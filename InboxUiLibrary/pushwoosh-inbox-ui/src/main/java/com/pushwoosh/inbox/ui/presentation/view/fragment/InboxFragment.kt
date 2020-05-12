@@ -30,11 +30,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.helper.ItemTouchHelper
+import com.google.android.material.snackbar.Snackbar
+import androidx.core.app.ActivityOptionsCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -86,7 +86,7 @@ open class InboxFragment : BaseFragment(), InboxView {
         inboxAdapter.onItemStopSwipe = { inboxSwipeRefreshLayout.isEnabled = true }
         inboxAdapter.onItemClick = { inboxMessage -> if (inboxMessage != null) inboxPresenter.onItemClick(inboxMessage) }
 
-        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
         inboxRecyclerView.layoutManager = layoutManager
         inboxRecyclerView.adapter = inboxAdapter
 
@@ -97,13 +97,13 @@ open class InboxFragment : BaseFragment(), InboxView {
 
         val divider = colorSchemeProvider.divider
         if (divider != null) {
-            val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
+            val dividerItemDecoration = androidx.recyclerview.widget.DividerItemDecoration(context, layoutManager.orientation)
             dividerItemDecoration.setDrawable(divider)
             inboxRecyclerView.addItemDecoration(dividerItemDecoration)
         }
 
         callback = SimpleItemTouchHelperCallback(adapter = inboxAdapter, context = context, colorSchemeProvider = colorSchemeProvider)
-        val itemTouchHelper = ItemTouchHelper(callback)
+        val itemTouchHelper = ItemTouchHelper(callback as ItemTouchHelper.Callback)
         itemTouchHelper.attachToRecyclerView(inboxRecyclerView)
 
         inboxSwipeRefreshLayout.setOnRefreshListener {

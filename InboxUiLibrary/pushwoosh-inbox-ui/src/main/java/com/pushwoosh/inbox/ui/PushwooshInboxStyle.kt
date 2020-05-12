@@ -28,9 +28,9 @@ package com.pushwoosh.inbox.ui
 
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
-import android.support.annotation.AnimRes
-import android.support.annotation.ColorRes
-import android.support.annotation.DrawableRes
+import androidx.annotation.AnimRes
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import android.view.animation.Animation
 import com.pushwoosh.inbox.ui.model.customizing.formatter.DefaultDateFormatter
 import com.pushwoosh.inbox.ui.model.customizing.formatter.InboxDateFormatter

@@ -30,9 +30,9 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
-import android.support.annotation.DrawableRes
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.annotation.DrawableRes
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.pushwoosh.inbox.ui.R
 import com.pushwoosh.inbox.ui.presentation.view.style.ColorSchemeProvider
 import com.pushwoosh.inbox.ui.utils.getBitmap
@@ -55,11 +55,11 @@ class SimpleItemTouchHelperCallback(private val adapter: ItemTouchHelperAdapter,
 
     override fun isItemViewSwipeEnabled(): Boolean = true
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+    override fun onSwiped(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, direction: Int) {
         adapter.onItemSwiped(viewHolder.adapterPosition)
     }
 
-    override fun onChildDraw(canvas: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+    override fun onChildDraw(canvas: Canvas, recyclerView: androidx.recyclerview.widget.RecyclerView, viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
         when (actionState) {
             ItemTouchHelper.ACTION_STATE_SWIPE -> {
                 if (icon == null) {
@@ -95,7 +95,7 @@ class SimpleItemTouchHelperCallback(private val adapter: ItemTouchHelperAdapter,
         super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
 
-    private fun updateState(dX: Float, dY: Float, isCurrentlyActive: Boolean, viewHolder: RecyclerView.ViewHolder) {
+    private fun updateState(dX: Float, dY: Float, isCurrentlyActive: Boolean, viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder) {
         if (dX == 0f && dY == 0f) {
             if (isCurrentlyActive) {
                 adapter.startSwipe()
@@ -109,7 +109,7 @@ class SimpleItemTouchHelperCallback(private val adapter: ItemTouchHelperAdapter,
         }
     }
 
-    override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+    override fun getMovementFlags(recyclerView: androidx.recyclerview.widget.RecyclerView, viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder): Int {
         if (!touchable) {
             return 0
         }
@@ -118,7 +118,7 @@ class SimpleItemTouchHelperCallback(private val adapter: ItemTouchHelperAdapter,
         return ItemTouchHelper.Callback.makeMovementFlags(0, swipeFlags)
     }
 
-    override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean =
+    override fun onMove(recyclerView: androidx.recyclerview.widget.RecyclerView, viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, target: androidx.recyclerview.widget.RecyclerView.ViewHolder): Boolean =
             false
 
     fun setTouchable(touchable: Boolean) {

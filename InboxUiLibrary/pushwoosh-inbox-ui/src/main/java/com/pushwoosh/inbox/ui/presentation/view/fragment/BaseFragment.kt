@@ -27,12 +27,12 @@
 package com.pushwoosh.inbox.ui.presentation.view.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.View
 import com.pushwoosh.inbox.ui.presentation.lifecycle.Lifecycle
 import com.pushwoosh.inbox.ui.presentation.lifecycle.LifecycleListener
 
-open class BaseFragment : Fragment(), Lifecycle {
+open class BaseFragment : androidx.fragment.app.Fragment(), Lifecycle {
     private val lifecycleListeners = mutableListOf<LifecycleListener>()
 
     override fun addLifecycleListener(lifecycleListener: LifecycleListener) {

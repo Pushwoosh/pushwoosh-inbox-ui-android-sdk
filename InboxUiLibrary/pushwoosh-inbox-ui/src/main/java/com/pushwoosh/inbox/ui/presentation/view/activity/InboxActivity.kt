@@ -29,8 +29,8 @@ package com.pushwoosh.inbox.ui.presentation.view.activity
 import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import com.pushwoosh.inbox.ui.R
 import com.pushwoosh.inbox.ui.presentation.view.fragment.InboxFragment

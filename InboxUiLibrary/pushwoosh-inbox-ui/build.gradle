@@ -44,12 +44,12 @@ android {
     compileSdkVersion global_compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion global_minSdkVersion
         targetSdkVersion global_compileSdkVersion
         versionCode 1
         versionName global_versionName
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
 
@@ -61,14 +61,15 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation "com.android.support:appcompat-v7:$support"
-    implementation "com.android.support:recyclerview-v7:$support"
-    implementation "com.android.support:design:$support"
+    implementation "androidx.appcompat:appcompat:${support}"
+    implementation "androidx.recyclerview:recyclerview:${support}"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:${swipe_refresh_layout}"
+    implementation "com.google.android.material:material:${support}"
 
-    implementation "com.android.support.constraint:constraint-layout:$constraint"
-    implementation "com.github.bumptech.glide:glide:$glide"
+    implementation "androidx.constraintlayout:constraintlayout:${constraint}"
+    implementation "com.github.bumptech.glide:glide:${glide}"
 
 	implementation "com.pushwoosh:pushwoosh:$pushwoosh"
 	implementation "com.pushwoosh:pushwoosh-inbox:$pushwoosh"

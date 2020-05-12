@@ -99,7 +99,9 @@ object InboxRepository {
             val data = result.data
 
             currentInboxMessages.clear()
-            currentInboxMessages.addAll(ArrayList(data))
+            data?.let{
+                currentInboxMessages.addAll(ArrayList(data))
+            }
 
             if (data != null && data.isNotEmpty()) {
                 if (isLoadingCachedMessages) {

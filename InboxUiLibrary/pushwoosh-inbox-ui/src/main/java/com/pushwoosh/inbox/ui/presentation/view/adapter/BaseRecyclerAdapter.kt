@@ -27,8 +27,8 @@
 package com.pushwoosh.inbox.ui.presentation.view.adapter
 
 import android.content.Context
-import android.support.annotation.LayoutRes
-import android.support.v7.widget.RecyclerView
+import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +36,7 @@ import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
 import com.pushwoosh.inbox.ui.utils.clear
 
-abstract class BaseRecyclerAdapter<VH : BaseRecyclerAdapter.ViewHolder<Model>, Model>(val context: Context) : RecyclerView.Adapter<VH>() {
+abstract class BaseRecyclerAdapter<VH : BaseRecyclerAdapter.ViewHolder<Model>, Model>(val context: Context) : androidx.recyclerview.widget.RecyclerView.Adapter<VH>() {
     private val mDataList = ArrayList<Model>()
 
     protected var mOnItemClickListener: ((View, Int) -> Unit) = { _, _ -> }
@@ -131,7 +131,7 @@ abstract class BaseRecyclerAdapter<VH : BaseRecyclerAdapter.ViewHolder<Model>, M
         holder.recycled()
     }
 
-    abstract class ViewHolder<Model>(view: View, private var adapter: BaseRecyclerAdapter<*, *>) : RecyclerView.ViewHolder(view), View.OnClickListener {
+    abstract class ViewHolder<Model>(view: View, private var adapter: BaseRecyclerAdapter<*, *>) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view), View.OnClickListener {
 
         constructor(@LayoutRes layoutId: Int, parent: ViewGroup, adapter: BaseRecyclerAdapter<*, *>) : this(LayoutInflater.from(parent.context).inflate(layoutId, parent, false), adapter)
 

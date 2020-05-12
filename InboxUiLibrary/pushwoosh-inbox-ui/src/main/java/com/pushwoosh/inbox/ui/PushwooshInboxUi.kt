@@ -26,7 +26,7 @@
 
 package com.pushwoosh.inbox.ui
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.pushwoosh.inbox.data.InboxMessage
 import com.pushwoosh.inbox.ui.presentation.view.fragment.InboxFragment
 
@@ -37,5 +37,5 @@ object PushwooshInboxUi{
     /**
      * @return the fragment corresponding for Inbox display
      */
-    fun createInboxFragment(): Fragment = InboxFragment()
+    fun createInboxFragment(): androidx.fragment.app.Fragment = InboxFragment()
 }
