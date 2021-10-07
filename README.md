@@ -5,7 +5,7 @@ To add Inbox UI to your Android project, you should add Kotlin support and Pushw
 
 ```
 buildscript {
-    ext.kotlin_version = '1.1.60'
+    ext.kotlin_version = '1.5.10'
 
     dependencies {
         ...
@@ -22,19 +22,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 ....
 
-ext.googlePlayService = "11.+"
-ext.support = "27.+"
-ext.pushwoosh = "5.+"
+ext.pushwoosh = "6.+"
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-
-    implementation "com.android.support:appcompat-v7:$support"
-    implementation "com.android.support:recyclerview-v7:$support"
-    implementation "com.android.support:design:$support"
-
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation "com.github.bumptech.glide:glide:4.3.1"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.32"
 
     implementation "com.pushwoosh:pushwoosh-inbox:$pushwoosh"
     implementation "com.pushwoosh:pushwoosh-inbox-ui:$pushwoosh"
