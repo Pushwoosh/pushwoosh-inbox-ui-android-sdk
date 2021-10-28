@@ -45,5 +45,14 @@ getSupportFragmentManager().beginTransaction()
                     .replace(R.id.inboxContainer, PushwooshInboxUi.INSTANCE.createInboxFragment())
                     .commitAllowingStateLoss()
 ```
+
+## Proguard rules
+If you enable code shrinking with proguard, add the following rule to your proguard rules:
+```
+-keep public class com.pushwoosh.inbox.PushwooshInboxPlugin {
+ *;
+}
+```
+
 ## Customization
 You can customize Inbox UI style. Check [attrs.xml](InboxUiLibrary/pushwoosh-inbox-ui/src/main/res/values/attrs.xml) for all attributes that you can change. Also you can change Inbox UI style from code. To do so, please see [PushwooshInboxStyle](InboxUiLibrary/pushwoosh-inbox-ui/src/main/java/com/pushwoosh/inbox/ui/PushwooshInboxStyle.kt). For more details, take a look at [Inbox sample](InboxSample).
