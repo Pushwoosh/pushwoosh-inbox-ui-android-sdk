@@ -35,7 +35,7 @@ subprojects {
 
     ext.googlePlayService = "11.6.2"
     ext.support = "27.0.1"
-	ext.pushwoosh = "6.6.8"
+	ext.pushwoosh = "6.6.9"
     ext.constraint = "1.0.2"
     ext.glide = "4.3.1"
 }
