@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~
-  ~ Copyright (c) 2017. Pushwoosh Inc. (http://www.pushwoosh.com)
+  ~ Copyright (c) 2026. Pushwoosh Inc. (http://www.pushwoosh.com)
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining
   ~ a copy of this software and associated documentation files (the
@@ -23,18 +23,16 @@
   ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
   ~ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/pw_banner_pin_chip_size"
+    android:layout_height="@dimen/pw_banner_pin_chip_size"
+    android:background="@drawable/pw_bg_banner_pin_chip"
+    android:visibility="gone">
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
-	<application>
-		<activity
-			android:name="com.pushwoosh.inbox.ui.presentation.view.activity.InboxActivity"
-			android:theme="@style/PwInboxTheme" />
-		<activity android:name="com.pushwoosh.inbox.ui.presentation.view.activity.AttachmentActivity"
-			android:theme="@style/PwInboxAttachment"/>
-		<activity android:name="com.pushwoosh.inbox.ui.presentation.view.activity.InboxVideoActivity"
-			android:configChanges="orientation|screenSize|keyboardHidden"
-			android:theme="@style/PwInboxAttachment"/>
-	</application>
-
-</manifest>
+    <ImageView
+        android:layout_width="@dimen/pw_banner_pin_icon_size"
+        android:layout_height="@dimen/pw_banner_pin_icon_size"
+        android:layout_gravity="center"
+        android:src="@drawable/inbox_ic_pin"
+        android:contentDescription="@null" />
+</FrameLayout>

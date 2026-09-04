@@ -1,6 +1,6 @@
 /*
  *
- * Copyright (c) 2017. Pushwoosh Inc. (http://www.pushwoosh.com)
+ * Copyright (c) 2026. Pushwoosh Inc. (http://www.pushwoosh.com)
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -24,24 +24,26 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.pushwoosh.inbox.ui
+package com.pushwoosh.inbox.ui;
 
-import androidx.fragment.app.Fragment
-import com.pushwoosh.inbox.data.InboxMessage
-import com.pushwoosh.inbox.ui.presentation.view.fragment.InboxFragment
+import androidx.annotation.NonNull;
 
-object PushwooshInboxUi{
+import com.pushwoosh.inbox.data.InboxMessage;
 
-    var onMessageClickListener: (OnInboxMessageClickListener)? = null
-
+/**
+ * Host-side hook for taps on inline CTA buttons rendered inside rich inbox
+ * cards. Mirrors the iOS {@code PushwooshInboxKitDelegate.didTapButton}
+ * contract: the listener runs before the SDK's default handling and receives
+ * the tapped button (including a {@code Custom} button's payload) on every
+ * invocation, whatever it returns.
+ */
+public interface OnInboxButtonClickListener {
     /**
-     * Hook for taps on inline CTA buttons of rich inbox cards. Return true from the
-     * listener to let the SDK perform the button's default action, false to consume the tap.
+     * Called when the user taps an inline CTA button on a rich inbox card.
+     *
+     * @return {@code true} to let the SDK perform the button's default action
+     * — open the URL, mark read, dismiss, and for a {@code Custom} button
+     * mark the message read; {@code false} to suppress all of that.
      */
-    var onButtonClickListener: (OnInboxButtonClickListener)? = null
-
-    /**
-     * @return the fragment corresponding for Inbox display
-     */
-    fun createInboxFragment(): androidx.fragment.app.Fragment = InboxFragment()
+    boolean onInboxButtonClick(@NonNull InboxMessage message, @NonNull InboxCardButton button);
 }

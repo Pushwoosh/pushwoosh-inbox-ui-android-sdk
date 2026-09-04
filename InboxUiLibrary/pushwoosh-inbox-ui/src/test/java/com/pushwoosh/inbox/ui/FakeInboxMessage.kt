@@ -1,6 +1,6 @@
 /*
  *
- * Copyright (c) 2017. Pushwoosh Inc. (http://www.pushwoosh.com)
+ * Copyright (c) 2026. Pushwoosh Inc. (http://www.pushwoosh.com)
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -26,22 +26,31 @@
 
 package com.pushwoosh.inbox.ui
 
-import androidx.fragment.app.Fragment
 import com.pushwoosh.inbox.data.InboxMessage
-import com.pushwoosh.inbox.ui.presentation.view.fragment.InboxFragment
+import com.pushwoosh.inbox.data.InboxMessageType
+import java.util.Date
 
-object PushwooshInboxUi{
-
-    var onMessageClickListener: (OnInboxMessageClickListener)? = null
-
-    /**
-     * Hook for taps on inline CTA buttons of rich inbox cards. Return true from the
-     * listener to let the SDK perform the button's default action, false to consume the tap.
-     */
-    var onButtonClickListener: (OnInboxButtonClickListener)? = null
-
-    /**
-     * @return the fragment corresponding for Inbox display
-     */
-    fun createInboxFragment(): androidx.fragment.app.Fragment = InboxFragment()
+/** Shared test fixture: a stub [InboxMessage] with every field overridable. */
+fun fakeInboxMessage(
+    code: String = "code",
+    title: String? = null,
+    imageUrl: String? = null,
+    message: String = "message",
+    bannerUrl: String? = null,
+    actionParams: String? = null,
+    read: Boolean = false,
+    actionPerformed: Boolean = false
+): InboxMessage = object : InboxMessage {
+    override fun getCode(): String = code
+    override fun getTitle(): String? = title
+    override fun getImageUrl(): String? = imageUrl
+    override fun getMessage(): String = message
+    override fun getSendDate(): Date = Date(0L)
+    override fun getISO8601SendDate(): String = "1970-01-01T00:00:00Z"
+    override fun getType(): InboxMessageType = InboxMessageType.PLAIN
+    override fun getBannerUrl(): String? = bannerUrl
+    override fun getActionParams(): String? = actionParams
+    override fun isRead(): Boolean = read
+    override fun isActionPerformed(): Boolean = actionPerformed
+    override fun compareTo(other: InboxMessage): Int = code.compareTo(other.code)
 }
